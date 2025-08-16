@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-course-saurabhkanauji"
 		},
+		"storage1_csv_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'storage1_csv'"
+		},
+		"storage1_csv_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://saurabhkanauji1103.dfs.core.windows.net/"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -33,6 +41,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"storage1_csv_accountKey": {
+						"value": "[parameters('storage1_csv_accountKey')]"
+					},
+					"storage1_csv_properties_typeProperties_url": {
+						"value": "[parameters('storage1_csv_properties_typeProperties_url')]"
 					}
 				}
 			},
