@@ -47,6 +47,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Union'"
 		},
+		"factsales_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'factsales'"
+		},
 		"storage1_csv_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'storage1_csv'"
@@ -234,6 +238,19 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/factsales')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('factsales_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/storage1_csv')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -405,76 +422,6 @@
 					"quoteChar": "\""
 				},
 				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage4')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText15')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage4",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Fact_Sales_2.csv",
-						"folderPath": "csvfiles",
-						"container": "source"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "transaction_id",
-						"type": "String"
-					},
-					{
-						"name": "transactional_date",
-						"type": "String"
-					},
-					{
-						"name": "product_id",
-						"type": "String"
-					},
-					{
-						"name": "customer_id",
-						"type": "String"
-					},
-					{
-						"name": "payment",
-						"type": "String"
-					},
-					{
-						"name": "credit_card",
-						"type": "String"
-					},
-					{
-						"name": "loyalty_card",
-						"type": "String"
-					},
-					{
-						"name": "cost",
-						"type": "String"
-					},
-					{
-						"name": "quantity",
-						"type": "String"
-					},
-					{
-						"name": "price",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage4')]"

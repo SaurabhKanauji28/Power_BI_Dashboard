@@ -47,6 +47,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Union'"
 		},
+		"factsales_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'factsales'"
+		},
 		"storage1_csv_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'storage1_csv'"
@@ -81,7 +85,54 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline13')]",
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"factsales1": {},
+									"factsales2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -802,6 +853,422 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText24')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "factsales",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_1.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/factsales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText25')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "factsales",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "csvfile",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/factsales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText26')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "factsales",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/factsales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText27')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "factsales",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_1.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/factsales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText28')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "factsales",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_2.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/factsales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText29')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "factsales",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "csvfile",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/factsales')]"
 			]
 		},
 		{
@@ -1599,6 +2066,19 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/factsales')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('factsales_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/storage1_csv')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -1679,14 +2159,14 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "csv1",
+								"referenceName": "DelimitedText24",
 								"type": "DatasetReference"
 							},
 							"name": "factsales1"
 						},
 						{
 							"dataset": {
-								"referenceName": "DelimitedText20",
+								"referenceName": "DelimitedText25",
 								"type": "DatasetReference"
 							},
 							"name": "factsales2"
@@ -1695,7 +2175,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "DelimitedText21",
+								"referenceName": "DelimitedText26",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -1758,9 +2238,9 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/csv1')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText20')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText21')]"
+				"[concat(variables('factoryId'), '/datasets/DelimitedText24')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText25')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText26')]"
 			]
 		},
 		{
@@ -1773,14 +2253,14 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "factssales1",
+								"referenceName": "DelimitedText27",
 								"type": "DatasetReference"
 							},
 							"name": "factsales1"
 						},
 						{
 							"dataset": {
-								"referenceName": "DelimitedText22",
+								"referenceName": "DelimitedText28",
 								"type": "DatasetReference"
 							},
 							"name": "factsales2"
@@ -1789,7 +2269,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "DelimitedText23",
+								"referenceName": "DelimitedText29",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -1846,18 +2326,15 @@
 						"          quantity as string,",
 						"          price as string",
 						"     ),",
-						"     umask: 0022,",
-						"     preCommands: [],",
-						"     postCommands: [],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> sink1"
 					]
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/factssales1')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText22')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText23')]"
+				"[concat(variables('factoryId'), '/datasets/DelimitedText27')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText28')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText29')]"
 			]
 		}
 	]

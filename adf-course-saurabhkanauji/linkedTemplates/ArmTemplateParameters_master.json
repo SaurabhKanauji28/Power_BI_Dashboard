@@ -35,6 +35,9 @@
 		"Union_connectionString": {
 			"value": ""
 		},
+		"factsales_connectionString": {
+			"value": ""
+		},
 		"storage1_csv_accountKey": {
 			"value": ""
 		},

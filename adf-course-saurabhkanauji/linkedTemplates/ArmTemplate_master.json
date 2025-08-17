@@ -47,6 +47,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Union'"
 		},
+		"factsales_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'factsales'"
+		},
 		"storage1_csv_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'storage1_csv'"
@@ -131,6 +135,9 @@
 					},
 					"Union_connectionString": {
 						"value": "[parameters('Union_connectionString')]"
+					},
+					"factsales_connectionString": {
+						"value": "[parameters('factsales_connectionString')]"
 					},
 					"storage1_csv_accountKey": {
 						"value": "[parameters('storage1_csv_accountKey')]"
