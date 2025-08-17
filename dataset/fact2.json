@@ -1,0 +1,24 @@
+{
+	"name": "fact2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Union",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Fact_Sales_2.csv",
+				"folderPath": "csvfiles",
+				"container": "source"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
