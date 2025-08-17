@@ -203,12 +203,13 @@
 									"referenceName": "AzureDataLakeStorage1",
 									"type": "LinkedServiceReference"
 								},
-								"path": "destine2"
+								"path": "destination/csvfile"
 							},
 							"enableLogging": true,
 							"storeSettings": {
 								"type": "AzureBlobFSReadSettings",
 								"recursive": true,
+								"wildcardFileName": "CC Customer Report.png",
 								"enablePartitionDiscovery": false
 							}
 						}
@@ -415,7 +416,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "CC*Customer*",
+						"fileName": "CC Customer Report.png",
 						"folderPath": "sourcemultipletype",
 						"fileSystem": "sourcediffernet"
 					}
