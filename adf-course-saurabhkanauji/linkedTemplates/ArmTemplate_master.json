@@ -7,9 +7,21 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-course-saurabhkanauji"
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
 		"storage1_csv_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'storage1_csv'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://saurabhkanauji1103.dfs.core.windows.net/"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://github.com"
 		},
 		"storage1_csv_properties_typeProperties_url": {
 			"type": "string",
@@ -42,8 +54,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
 					"storage1_csv_accountKey": {
 						"value": "[parameters('storage1_csv_accountKey')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"HttpServer1_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
 					},
 					"storage1_csv_properties_typeProperties_url": {
 						"value": "[parameters('storage1_csv_properties_typeProperties_url')]"
