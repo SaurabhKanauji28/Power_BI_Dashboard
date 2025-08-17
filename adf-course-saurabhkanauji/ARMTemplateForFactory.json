@@ -19,15 +19,47 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage3'"
 		},
+		"AzureBlobStorage4_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage4'"
+		},
+		"AzureBlobStorage5_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage5'"
+		},
+		"AzureBlobStorage6_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage6'"
+		},
+		"AzureBlobStorage7_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage7'"
+		},
 		"AzureDataLakeStorage1_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2'"
+		},
+		"Union_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Union'"
 		},
 		"storage1_csv_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'storage1_csv'"
 		},
+		"union1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'union1'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://saurabhkanauji1103.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://saurabhkanauji1103.dfs.core.windows.net/"
 		},
@@ -39,10 +71,6 @@
 			"type": "string",
 			"defaultValue": "https://saurabhkanauji1103.dfs.core.windows.net/"
 		},
-		"trigger2_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/3a343c18-fbc0-48c3-879c-40d5de90d77c/resourceGroups/SK-ADF-course/providers/Microsoft.Storage/storageAccounts/saurabhkanauji1103"
-		},
 		"trigger3_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/3a343c18-fbc0-48c3-879c-40d5de90d77c/resourceGroups/SK-ADF-course/providers/Microsoft.Storage/storageAccounts/saurabhkanauji1103"
@@ -53,14 +81,14 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/VarPipeline')]",
+			"name": "[concat(parameters('factoryName'), '/pipeline13')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Get Metadata1",
-						"type": "GetMetadata",
+						"name": "dataflow2",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -71,167 +99,22 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"dataset": {
-								"referenceName": "DelimitedText3",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"childItems"
-							],
-							"storeSettings": {
-								"type": "AzureBlobFSReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
-						}
-					},
-					{
-						"name": "Set variable1",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "Get Metadata1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "var_files",
-							"value": {
-								"value": "@activity('Get Metadata1').output.childItems",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"var_files": {
-						"type": "Array"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText3')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*.*",
-									"deleteFilesAfterCompletion": false
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
+							"dataflow": {
+								"referenceName": "dataflow2",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"factsales1": {},
+									"factsales2": {},
+									"sink1": {}
 								}
 							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings",
-									"copyBehavior": "FlattenHierarchy"
-								}
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
 							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "Binary3",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Binary4",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Binary3')]",
-				"[concat(variables('factoryId'), '/datasets/Binary4')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Deletesourceinputdata",
-						"type": "Delete",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "Binary6",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"logStorageSettings": {
-								"linkedServiceName": {
-									"referenceName": "AzureDataLakeStorage1",
-									"type": "LinkedServiceReference"
-								},
-								"path": "destination/csvfile"
-							},
-							"enableLogging": true,
-							"storeSettings": {
-								"type": "AzureBlobFSReadSettings",
-								"recursive": true,
-								"wildcardFileName": "CC Customer Report.png",
-								"enablePartitionDiscovery": false
-							}
+							"traceLevel": "Fine"
 						}
 					}
 				],
@@ -241,467 +124,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Binary6')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*.csv",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "DelimitedText6",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DelimitedText8",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText6')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText8')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline4')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*.csv",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "DelimitedText9",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Json1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText9')]",
-				"[concat(variables('factoryId'), '/datasets/Json1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline5')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*.csv",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "DelimitedText10",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Json2",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText10')]",
-				"[concat(variables('factoryId'), '/datasets/Json2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline6')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data2",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*csv",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "DelimitedText11",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Json3",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText11')]",
-				"[concat(variables('factoryId'), '/datasets/Json3')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipelinegithub')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copygit",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "HttpReadSettings",
-									"requestMethod": "GET"
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings",
-									"copyBehavior": "FlattenHierarchy"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "sourcegit",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "sinkpbix",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/sourcegit')]",
-				"[concat(variables('factoryId'), '/datasets/sinkpbix')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Binary1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "storage1_csv",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "destine2"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/storage1_csv')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Binary2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "storage1_csv",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "sourcemultipletype",
-						"fileSystem": "sourcediffernet"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/storage1_csv')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Binary3')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "storage1_csv",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "sourcemultipletype",
-						"fileSystem": "sourcediffernet"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/storage1_csv')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Binary4')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "storage1_csv",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "destine2"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/storage1_csv')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Binary5')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "storage1_csv",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "csvfile",
-						"fileSystem": "destination"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/storage1_csv')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
 			]
 		},
 		{
@@ -726,34 +149,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "storage1_csv",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "csvfiles",
-						"fileSystem": "source1"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/storage1_csv')]"
 			]
 		},
 		{
@@ -811,6 +206,300 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText13')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage4",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage4')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText15')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage4",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_2.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage4')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText16')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage5",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "csvfile",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage5')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText17')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Union",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "csvfile",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Union')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText18')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Union",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_1.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Union')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText19')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage6",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_2.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage6')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -835,6 +524,284 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/storage1_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText20')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "union1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_2.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/union1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText21')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage7",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "csvfile",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage7')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText22')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Fact_Sales_2.csv",
+						"folderPath": "csvfiles",
+						"fileSystem": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText23')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "csvfile",
+						"fileSystem": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage2')]"
 			]
 		},
 		{
@@ -1160,6 +1127,35 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Fact1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Union",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_1.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Union')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Json1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1229,6 +1225,204 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/csv1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "union1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_1.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/union1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/fact2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Union",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_2.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Union')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/fact_1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Union",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Fact_Sales_1.csv",
+						"folderPath": "csvfiles",
+						"container": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Union')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/factssales1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Fact_Sales_1.csv",
+						"folderPath": "csvfiles",
+						"fileSystem": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "transaction_id",
+						"type": "String"
+					},
+					{
+						"name": "transactional_date",
+						"type": "String"
+					},
+					{
+						"name": "product_id",
+						"type": "String"
+					},
+					{
+						"name": "customer_id",
+						"type": "String"
+					},
+					{
+						"name": "payment",
+						"type": "String"
+					},
+					{
+						"name": "credit_card",
+						"type": "String"
+					},
+					{
+						"name": "loyalty_card",
+						"type": "String"
+					},
+					{
+						"name": "cost",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/sinkpbix')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1249,28 +1443,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/storage1_csv')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sourcegit')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "HttpServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "HttpServerLocation",
-						"relativeUrl": "SaurabhKanauji28/Power_BI_Dashboard/blob/58e7241c20e430fee5be903f29c403847b061b00/MS_Dashboard%20-.pbix"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/HttpServer1')]"
 			]
 		},
 		{
@@ -1313,6 +1485,58 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage4')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage4_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage5')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage5_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage6')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage6_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage7')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage7_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -1330,6 +1554,23 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/HttpServer1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -1340,6 +1581,19 @@
 					"url": "[parameters('HttpServer1_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
 					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Union')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('Union_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -1362,21 +1616,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/union1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('union1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/trigger1')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pipeline3",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
+				"runtimeState": "Stopped",
+				"pipelines": [],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
@@ -1388,39 +1647,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline3')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger2')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pipeline4",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/source2/blobs/",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('trigger2_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline4')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/trigger3')]",
@@ -1429,22 +1656,7 @@
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pipeline5",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "pipeline6",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
+				"pipelines": [],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
 					"blobPathBeginsWith": "/source2/blobs/",
@@ -1455,9 +1667,197 @@
 					]
 				}
 			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "csv1",
+								"type": "DatasetReference"
+							},
+							"name": "factsales1"
+						},
+						{
+							"dataset": {
+								"referenceName": "DelimitedText20",
+								"type": "DatasetReference"
+							},
+							"name": "factsales2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText21",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "union1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          transaction_id as string,",
+						"          transactional_date as string,",
+						"          product_id as string,",
+						"          customer_id as string,",
+						"          payment as string,",
+						"          credit_card as string,",
+						"          loyalty_card as string,",
+						"          cost as string,",
+						"          quantity as string,",
+						"          price as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> factsales1",
+						"source(output(",
+						"          transaction_id as string,",
+						"          transactional_date as string,",
+						"          product_id as string,",
+						"          customer_id as string,",
+						"          payment as string,",
+						"          credit_card as string,",
+						"          loyalty_card as string,",
+						"          cost as string,",
+						"          quantity as string,",
+						"          price as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> factsales2",
+						"factsales1, factsales2 union(byName: true)~> union1",
+						"union1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          transaction_id as string,",
+						"          transactional_date as string,",
+						"          product_id as string,",
+						"          customer_id as string,",
+						"          payment as string,",
+						"          credit_card as string,",
+						"          loyalty_card as string,",
+						"          cost as string,",
+						"          quantity as string,",
+						"          price as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline5')]",
-				"[concat(variables('factoryId'), '/pipelines/pipeline6')]"
+				"[concat(variables('factoryId'), '/datasets/csv1')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText20')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText21')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "factssales1",
+								"type": "DatasetReference"
+							},
+							"name": "factsales1"
+						},
+						{
+							"dataset": {
+								"referenceName": "DelimitedText22",
+								"type": "DatasetReference"
+							},
+							"name": "factsales2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText23",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "union1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          transaction_id as string,",
+						"          transactional_date as string,",
+						"          product_id as string,",
+						"          customer_id as string,",
+						"          payment as string,",
+						"          credit_card as string,",
+						"          loyalty_card as string,",
+						"          cost as string,",
+						"          quantity as string,",
+						"          price as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> factsales1",
+						"source(output(",
+						"          transaction_id as string,",
+						"          transactional_date as string,",
+						"          product_id as string,",
+						"          customer_id as string,",
+						"          payment as string,",
+						"          credit_card as string,",
+						"          loyalty_card as string,",
+						"          cost as string,",
+						"          quantity as string,",
+						"          price as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> factsales2",
+						"factsales1, factsales2 union(byName: true)~> union1",
+						"union1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          transaction_id as string,",
+						"          transactional_date as string,",
+						"          product_id as string,",
+						"          customer_id as string,",
+						"          payment as string,",
+						"          credit_card as string,",
+						"          loyalty_card as string,",
+						"          cost as string,",
+						"          quantity as string,",
+						"          price as string",
+						"     ),",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/factssales1')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText22')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText23')]"
 			]
 		}
 	]
