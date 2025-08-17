@@ -11,13 +11,13 @@
 		"AzureBlobStorage2_connectionString": {
 			"value": ""
 		},
+		"AzureBlobStorage3_connectionString": {
+			"value": ""
+		},
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
 		"storage1_csv_accountKey": {
-			"value": ""
-		},
-		"AzureBlobStorage3_connectionString": {
 			"value": ""
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
