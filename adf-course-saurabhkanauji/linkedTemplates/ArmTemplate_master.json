@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'storage1_csv'"
 		},
+		"AzureBlobStorage3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage3'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://saurabhkanauji1103.dfs.core.windows.net/"
@@ -36,6 +40,10 @@
 			"defaultValue": "https://saurabhkanauji1103.dfs.core.windows.net/"
 		},
 		"trigger2_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/3a343c18-fbc0-48c3-879c-40d5de90d77c/resourceGroups/SK-ADF-course/providers/Microsoft.Storage/storageAccounts/saurabhkanauji1103"
+		},
+		"trigger3_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/3a343c18-fbc0-48c3-879c-40d5de90d77c/resourceGroups/SK-ADF-course/providers/Microsoft.Storage/storageAccounts/saurabhkanauji1103"
 		},
@@ -78,6 +86,9 @@
 					"storage1_csv_accountKey": {
 						"value": "[parameters('storage1_csv_accountKey')]"
 					},
+					"AzureBlobStorage3_connectionString": {
+						"value": "[parameters('AzureBlobStorage3_connectionString')]"
+					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -107,6 +118,9 @@
 					},
 					"trigger2_properties_typeProperties_scope": {
 						"value": "[parameters('trigger2_properties_typeProperties_scope')]"
+					},
+					"trigger3_properties_typeProperties_scope": {
+						"value": "[parameters('trigger3_properties_typeProperties_scope')]"
 					}
 				}
 			},
