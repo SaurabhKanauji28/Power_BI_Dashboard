@@ -5,6 +5,12 @@
 		"factoryName": {
 			"value": "adf-course-saurabhkanauji"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage2_connectionString": {
+			"value": ""
+		},
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
@@ -19,6 +25,9 @@
 		},
 		"storage1_csv_properties_typeProperties_url": {
 			"value": "https://saurabhkanauji1103.dfs.core.windows.net/"
+		},
+		"trigger2_properties_typeProperties_scope": {
+			"value": "/subscriptions/3a343c18-fbc0-48c3-879c-40d5de90d77c/resourceGroups/SK-ADF-course/providers/Microsoft.Storage/storageAccounts/saurabhkanauji1103"
 		}
 	}
 }
