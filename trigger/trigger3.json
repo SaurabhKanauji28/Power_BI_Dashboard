@@ -1,0 +1,24 @@
+{
+	"name": "trigger3",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline5",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/source2/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/3a343c18-fbc0-48c3-879c-40d5de90d77c/resourceGroups/SK-ADF-course/providers/Microsoft.Storage/storageAccounts/saurabhkanauji1103",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
